@@ -11,11 +11,15 @@ class Position(models.Model):
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
-        Position, on_delete=models.SET_NULL, null=True, blank=True
+        Position,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="workers",
     )
 
     def __str__(self):
-        return self.username
+        return f"{self.username} ({self.position})"
 
 
 class TaskType(models.Model):
@@ -39,9 +43,16 @@ class Task(models.Model):
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=1, choices=PRIORITIES, default="M")
     task_type = models.ForeignKey(
-        TaskType, on_delete=models.SET_NULL, null=True
+        TaskType, on_delete=models.SET_NULL, null=True, related_name="tasks"
     )
-    assignees = models.ManyToManyField(Worker)
+    assignees = models.ManyToManyField(Worker, related_name="tasks_assigned")
+    assignor = models.ForeignKey(
+        Worker,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="tasks_created"
+    )
 
     def __str__(self):
         return self.name
