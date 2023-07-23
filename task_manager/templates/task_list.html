@@ -21,7 +21,7 @@
 
         <div class="col">
           <div class="card h-100">
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
 
               <div class="d-flex justify-content-between mb-2">
 
@@ -30,9 +30,13 @@
                 {% else %}
                   <span class="badge rounded-pill text-bg-success">Active</span>
                 {% endif %}
-
                 <span class="badge rounded-pill text-bg-secondary">{{ task.get_priority_display }}</span>
-                <span class="badge rounded-pill text-bg-info">Due date: {{ task.deadline }}</span>
+                {% if task.deadline < today %}
+                  <span class="badge rounded-pill text-bg-danger">Due date: {{ task.deadline }}</span>
+                {% else %}
+                  <span class="badge rounded-pill text-bg-info">Due date: {{ task.deadline }}</span>
+                {% endif %}
+
               </div>
 
               <h5 class="card-title">{{ task.name }}</h5>
@@ -46,10 +50,12 @@
                 {% endfor %}
               </ul>
 
-              <div class="d-flex justify-content-end mb-2">
-                <a href="#"><span class="badge rounded-pill text-bg-dark mx-2">View</span></a>
-                <a href="#"><span class="badge rounded-pill text-bg-dark mx-2">Edit</span></a>
-                <a href="#"><span class="badge rounded-pill text-bg-dark mx-2">Delete</span></a>
+              <div class="mt-auto">
+                <div class="d-flex justify-content-end mb-2">
+                  <a href="{% url 'task_manager:task-update' pk=task.pk %}">
+                    <span class="badge rounded-pill text-bg-dark mx-2">Edit</span>
+                  </a>
+                </div>
               </div>
 
             </div>
@@ -60,10 +66,7 @@
 
     {% else %}
 
-      <p>There
-        <ar></ar>
-        e no task types.
-      </p>
+      <p>There no tasks.</p>
 
     {% endif %}
 

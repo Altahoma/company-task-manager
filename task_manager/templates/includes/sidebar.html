@@ -18,13 +18,14 @@
   <button type="button" class="btn btn-secondary mb-2 w-100">All tasks</button>
 </a>
 
-<div class="my-auto">
-  <p class="align-middle">Project status</p>
-  <span class="badge rounded-pill text-bg-warning w-100 mb-1 p-2">Pending: 1</span>
-  <span class="badge rounded-pill text-bg-success w-100 mb-1 p-2">Active: 2</span>
-  <span class="badge rounded-pill text-bg-danger w-100 mb-1 p-2">Waiting: 1</span>
-  <span class="badge rounded-pill text-bg-primary w-100 mb-1 p-2">Completed: 0</span>
-</div>
+{% if request.user.is_authenticated %}
+  <div class="my-auto">
+    <span class="badge rounded-pill text-bg-warning w-100 mb-1 p-2">Pending: {{ pending_tasks }}</span>
+    <span class="badge rounded-pill text-bg-success w-100 mb-1 p-2">Active: {{ active_tasks }}</span>
+    <span class="badge rounded-pill text-bg-danger w-100 mb-1 p-2">Waiting: {{ waiting_tasks }}</span>
+    <span class="badge rounded-pill text-bg-primary w-100 mb-1 p-2">Completed: {{ completed_tasks }}</span>
+  </div>
+{% endif %}
 
 <div class="mt-auto">
   <ul class="sidebar-nav list-group mt-3">

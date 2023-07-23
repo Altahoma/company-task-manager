@@ -26,7 +26,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = "__all__"
-        exclude = ("is_completed", "assignor")
+        exclude = ("assignor",)
 
         widgets = {
             "deadline": forms.DateInput(attrs={"type": "date"}),
