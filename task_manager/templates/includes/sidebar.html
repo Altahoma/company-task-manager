@@ -11,15 +11,11 @@
 </a>
 
 <a href="{% url 'task_manager:task-type-list' %}">
-  <button type="button" class="btn btn-secondary mb-2 w-100">All task types</button>
+  <button type="button" class="btn btn-secondary mb-2 w-100">All types</button>
 </a>
 
 <a href="{% url 'task_manager:task-list' %}">
   <button type="button" class="btn btn-secondary mb-2 w-100">All tasks</button>
-</a>
-
-<a href="{% url 'task_manager:task-create' %}">
-  <button type="button" class="btn btn-secondary mb-2 w-100">Create task</button>
 </a>
 
 <div class="my-auto">
@@ -27,17 +23,17 @@
   <span class="badge rounded-pill text-bg-warning w-100 mb-1 p-2">Pending: 1</span>
   <span class="badge rounded-pill text-bg-success w-100 mb-1 p-2">Active: 2</span>
   <span class="badge rounded-pill text-bg-danger w-100 mb-1 p-2">Waiting: 1</span>
-  <span class="badge rounded-pill text-bg-primary w-100 mb-1 p-2">Invoiced: 0</span>
+  <span class="badge rounded-pill text-bg-primary w-100 mb-1 p-2">Completed: 0</span>
 </div>
 
 <div class="mt-auto">
   <ul class="sidebar-nav list-group mt-3">
     {% if user.is_authenticated %}
       <li class="list-group-item">{{ user.get_username }}</li>
-      <li class="list-group-item"><a href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
+      <li class="list-group-item"><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
     {% else %}
-      <li class="list-group-item"><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
-      <li class="list-group-item"><a href="{% url 'register' %}?next={{request.path}}">Register</a></li>
+      <li class="list-group-item"><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+      <li class="list-group-item"><a href="{% url 'register' %}?next={{ request.path }}">Register</a></li>
     {% endif %}
   </ul>
 </div>

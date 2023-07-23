@@ -1,41 +1,72 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Task list
-  </h1>
 
-  {% if task_list %}
-    <table class="table">
-      <tr>
-          <th>ID</th>
-          <th>Task name</th>
-          <th>Description</th>
-          <th>Deadline</th>
-          <th>Completed</th>
-          <th>Priority</th>
-          <th>Assignees</th>
-          <th>Assignor</th>
-        </tr>
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'task_manager:task-create' %}">
+        <button type="button" class="btn btn-dark">Create task</button>
+      </a>
+    </div>
+    <div class="col d-flex justify-content-end">
+      {% include "includes/search.html" %}
+    </div>
+  </div>
+
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% if task_list %}
+
       {% for task in task_list %}
-        <tr>
-          <td>{{ task.id }}</td>
-          <td>{{ task.name }}</td>
-          <td>{{ task.description }}</td>
-          <td>{{ task.deadline }}</td>
-          <td>{{ task.is_completed }}</td>
-          <td>{{ task.get_priority_display }}</td>
-          <td>
-            {% for worker in task.assignees.all %}
-              <li>{{ worker.first_name }} {{ worker.last_name }}</li>
-            {% endfor %}
-          </td>
-          <td>{{ task.assignor }}</td>
-        </tr>
+
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+
+              <div class="d-flex justify-content-between mb-2">
+
+                {% if task.is_completed %}
+                  <span class="badge rounded-pill text-bg-primary">Completed</span>
+                {% else %}
+                  <span class="badge rounded-pill text-bg-success">Active</span>
+                {% endif %}
+
+                <span class="badge rounded-pill text-bg-secondary">{{ task.get_priority_display }}</span>
+                <span class="badge rounded-pill text-bg-info">Due date: {{ task.deadline }}</span>
+              </div>
+
+              <h5 class="card-title">{{ task.name }}</h5>
+              <p class="card-text">{{ task.description }}</p>
+              <p><span class="fw-semibold">Assignor:</span> {{ task.assignor.first_name }} {{ task.assignor.last_name }}
+              </p>
+              <span class="fw-semibold">Assignees:</span>
+              <ul>
+                {% for worker in task.assignees.all %}
+                  <li>{{ worker.first_name }} {{ worker.last_name }}</li>
+                {% endfor %}
+              </ul>
+
+              <div class="d-flex justify-content-end mb-2">
+                <a href="#"><span class="badge rounded-pill text-bg-dark mx-2">View</span></a>
+                <a href="#"><span class="badge rounded-pill text-bg-dark mx-2">Edit</span></a>
+                <a href="#"><span class="badge rounded-pill text-bg-dark mx-2">Delete</span></a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       {% endfor %}
-    </table>
-  {% else %}
-    <p>There are no task types.</p>
-  {% endif %}
+
+    {% else %}
+
+      <p>There
+        <ar></ar>
+        e no task types.
+      </p>
+
+    {% endif %}
+
+  </div>
 
 {% endblock %}
