@@ -27,14 +27,14 @@
   </div>
 {% endif %}
 
-<div class="mt-auto">
-  <ul class="sidebar-nav list-group mt-3">
+<div class="mt-auto ">
+  <ul class="sidebar-nav list-group mt-3 ">
     {% if user.is_authenticated %}
-      <li class="list-group-item">{{ user.get_username }}</li>
-      <li class="list-group-item"><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+      <li class="list-group-item bg-light">{{ user.get_username }}</li>
+      <li class="list-group-item bg-light"><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
     {% else %}
-      <li class="list-group-item"><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
-      <li class="list-group-item"><a href="{% url 'register' %}?next={{ request.path }}">Register</a></li>
+      <li class="list-group-item bg-light"><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+      <li class="list-group-item bg-light"><a href="{% url 'register' %}?next={{ request.path }}">Register</a></li>
     {% endif %}
   </ul>
 </div>
