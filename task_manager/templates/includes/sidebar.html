@@ -1,0 +1,40 @@
+<a href="{% url 'task_manager:index' %}">
+  <button type="button" class="btn btn-secondary mb-2 w-100">Home</button>
+</a>
+
+<a href="{% url 'task_manager:worker-list' %}">
+  <button type="button" class="btn btn-secondary mb-2 w-100">All workers</button>
+</a>
+
+<a href="{% url 'task_manager:position-list' %}">
+  <button type="button" class="btn btn-secondary mb-2 w-100">All positions</button>
+</a>
+
+<a href="{% url 'task_manager:task-type-list' %}">
+  <button type="button" class="btn btn-secondary mb-2 w-100">All types</button>
+</a>
+
+<a href="{% url 'task_manager:task-list' %}">
+  <button type="button" class="btn btn-secondary mb-2 w-100">All tasks</button>
+</a>
+
+{% if request.user.is_authenticated %}
+  <div class="my-auto">
+    <span class="badge rounded-pill text-bg-warning w-100 mb-1 p-2">Pending: {{ pending_tasks }}</span>
+    <span class="badge rounded-pill text-bg-success w-100 mb-1 p-2">Active: {{ active_tasks }}</span>
+    <span class="badge rounded-pill text-bg-danger w-100 mb-1 p-2">Waiting: {{ waiting_tasks }}</span>
+    <span class="badge rounded-pill text-bg-primary w-100 mb-1 p-2">Completed: {{ completed_tasks }}</span>
+  </div>
+{% endif %}
+
+<div class="mt-auto ">
+  <ul class="sidebar-nav list-group mt-3 ">
+    {% if user.is_authenticated %}
+      <li class="list-group-item bg-light">{{ user.get_username }}</li>
+      <li class="list-group-item bg-light"><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+    {% else %}
+      <li class="list-group-item bg-light"><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+      <li class="list-group-item bg-light"><a href="{% url 'register' %}?next={{ request.path }}">Register</a></li>
+    {% endif %}
+  </ul>
+</div>
