@@ -2,6 +2,10 @@
 
 Welcome to the Company Task Manager Django project! This web application allows users to register, login, create tasks, and assign them to other users. It simplifies task management within a company or organization, making it easier to track and collaborate on various tasks.
 
+## Check it out!
+
+[Company Task Manager deployed to Render](https://task-manager-rucp.onrender.com/)
+
 ## Table of Contents
 
 - [Introduction](#introduction)
