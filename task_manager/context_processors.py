@@ -1,14 +1,18 @@
-from task_manager.models import Task
 from datetime import datetime
+
+from django.db.models import Q
+
+from task_manager.models import Task
 
 
 def sidebar_data(request):
     if request.user.is_authenticated:
-        queryset = Task.objects.all()
+        queryset = Task.objects.filter(
+            Q(assignor=request.user) | Q(assignees=request.user)
+        ).distinct()
 
         all_tasks = queryset.count()
-        pending_tasks = queryset.filter(assignor=request.user).count()
-        active_tasks = queryset.filter(assignees=request.user).count()
+        active_tasks = queryset.filter(is_completed=False).count()
         waiting_tasks = (
             queryset.filter(is_completed=False)
             .filter(deadline__lt=datetime.today())
@@ -18,7 +22,6 @@ def sidebar_data(request):
 
         return {
             "all_tasks": all_tasks,
-            "pending_tasks": pending_tasks,
             "active_tasks": active_tasks,
             "waiting_tasks": waiting_tasks,
             "completed_tasks": completed_tasks,

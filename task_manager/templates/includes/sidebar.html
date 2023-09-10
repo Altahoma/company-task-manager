@@ -20,7 +20,6 @@
 
 {% if request.user.is_authenticated %}
   <div class="my-auto">
-    <span class="badge rounded-pill text-bg-warning w-100 mb-1 p-2">Pending: {{ pending_tasks }}</span>
     <span class="badge rounded-pill text-bg-success w-100 mb-1 p-2">Active: {{ active_tasks }}</span>
     <span class="badge rounded-pill text-bg-danger w-100 mb-1 p-2">Waiting: {{ waiting_tasks }}</span>
     <span class="badge rounded-pill text-bg-primary w-100 mb-1 p-2">Completed: {{ completed_tasks }}</span>
