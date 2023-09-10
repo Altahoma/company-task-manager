@@ -11,7 +11,7 @@ from task_manager.forms import TaskForm, RegisterForm, TaskNameSearchForm
 from task_manager.models import Worker, Position, TaskType, Task
 
 
-class IndexView(LoginRequiredMixin, TemplateView):
+class IndexView(TemplateView):
     template_name = "index.html"
 
 
