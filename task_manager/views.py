@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -10,7 +11,7 @@ from task_manager.forms import TaskForm, RegisterForm, TaskNameSearchForm
 from task_manager.models import Worker, Position, TaskType, Task
 
 
-class IndexView(LoginRequiredMixin, TemplateView):
+class IndexView(TemplateView):
     template_name = "index.html"
 
 
@@ -34,7 +35,10 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     template_name = "task_list.html"
 
     def get_queryset(self):
-        queryset = Task.objects.filter(assignor=self.request.user)
+        current_user = self.request.user
+        queryset = Task.objects.filter(
+            Q(assignor=current_user) | Q(assignees=current_user)
+        ).order_by('is_completed', 'deadline').distinct()
         form = TaskNameSearchForm(self.request.GET)
 
         if form.is_valid():
@@ -56,11 +60,6 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = TaskForm
     template_name = "task_form.html"
     success_url = reverse_lazy("task_manager:task-list")
-
-    # def get_initial(self, *args, **kwargs):
-    #     initial = super(TaskCreateView, self).get_initial()
-    #     initial['assignor'] = self.request.user
-    #     return initial
 
     def form_valid(self, form):
         form.instance.assignor = self.request.user
