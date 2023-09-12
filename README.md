@@ -6,6 +6,10 @@ Welcome to the Company Task Manager Django project! This web application allows 
 
 [Company Task Manager deployed to Render](https://task-manager-rucp.onrender.com/)
 
+- login: `michael.davis`
+
+- pass: `z32=iF?9gtm@>z#`
+
 ## Table of Contents
 
 - [Introduction](#introduction)
